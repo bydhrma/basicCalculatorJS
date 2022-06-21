@@ -64,14 +64,28 @@ class Calculator {
         this.previousOperandTextElement.innerText = 
             `${this.getDisplayNumber(this.previousOperand)} ${this.operation}`
 
+        } else {
+            this.previousOperandTextElement.innerText = ''
         }
     }
 
-    getDisplay() {
-        const floatNumber = parseFloat(number)
-        if (isNaN(floatNumber)) return ''
-        return floatNumber.toLocaleString('en')
+    getDisplayNumber(number) {
+        const stringNumber = number.toString()
+        const integerDigit = parseFloat(stringNumber.split('.')[0])
+        const decimalDigits = stringNumber.split('.')[1]
+        
+        let integerDisplay 
+        if(isNaN(integerDigit)) {
+            integerDisplay = ''
+        } else {
+            integerDisplay = integerDigit.toLocaleString('en', {maximumFractionDigits: 0})
         }
+        if (decimalDigits != null) {
+            return `${integerDisplay}.${decimalDigits}`
+        } else {
+            return integerDisplay 
+        }
+     }
 }
 
 
